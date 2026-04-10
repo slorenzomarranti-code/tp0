@@ -41,18 +41,18 @@ int main(void)
 
 	/*---------------------------------------------------PARTE 3-------------------------------------------------------------*/
 
-	// ADVERTENCIA: Antes de continuar, tenemos que asegurarnos que el servidor esté corriendo para poder conectarnos a él
-
-	// Creamos una conexión hacia el servidor usando los datos del config
     conexion = crear_conexion(ip, puerto);
+	
+	if (conexion == -1) {
+        log_error(logger, "Fallo al conectar con el servidor. Revisa IP/Puerto o si el server esta prendido.");
+        terminar_programa(conexion, logger, config);
+        exit(1); 
+	}
 
-    // Enviamos al servidor el valor de CLAVE como un mensaje simple
     enviar_mensaje(valor, conexion);
 
-    // Armamos y enviamos el paquete con las líneas de consola
     paquete(conexion);
 
-    // Limpiamos la memoria y cerramos la conexión
     terminar_programa(conexion, logger, config); 
 
 	/*---------------------------------------------------PARTE 5-------------------------------------------------------------*/
